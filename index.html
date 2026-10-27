@@ -84,11 +84,11 @@
             <div class="form-row three">
               <label class="field"><span>Tone</span><select id="toneSelect"><option>Clear & confident</option><option>Warm & conversational</option><option>Bold & energetic</option><option>Technical & precise</option></select></label>
               <label class="field"><span>Video length</span><div class="input-suffix"><input id="durationInput" type="number" min="1" placeholder="8" /><span>min</span></div></label>
-              <label class="field"><span>Language</span><select><option>English (US)</option><option>English (UK)</option><option>Hindi</option><option>Odia</option></select></label>
+              <label class="field"><span>Language</span><select id="languageSelect"><option>English (US)</option><option>English (UK)</option><option>Hindi</option><option>Odia</option></select></label>
             </div>
 
-            <div class="upload-row">
-              <div><strong>Accurate chapter timing</strong><span>Upload final captions for high-confidence timestamps.</span></div>
+            <div class="upload-row" id="captionDrop">
+              <div><strong>Accurate chapter timing</strong><span>Upload or drop final captions for high-confidence timestamps.</span></div>
               <label class="upload-button" for="srtUpload"><i data-icon="upload"></i><span id="uploadLabel">Add SRT / VTT</span><input id="srtUpload" type="file" accept=".srt,.vtt" /></label>
             </div>
 
@@ -127,7 +127,7 @@
 
             <div class="results hidden" id="results">
               <div class="result-tabs" role="tablist">
-                <button class="active" data-tab="overview">Overview</button><button data-tab="titles">Titles</button><button data-tab="chapters">Chapters</button><button data-tab="concepts">Concepts</button>
+                <button class="active" data-tab="overview">Overview</button><button data-tab="titles">Titles</button><button data-tab="description">Description</button><button data-tab="chapters">Chapters</button><button data-tab="concepts">Concepts</button>
               </div>
               <div class="tab-content active" id="overview">
                 <div class="score-card"><div class="score-ring"><strong>94</strong><span>/100</span></div><div><span>Package score</span><h3>Ready for review</h3><p>All deterministic platform checks passed.</p></div><em>Excellent</em></div>
@@ -136,7 +136,15 @@
                 <div class="validation"><i>✓</i><div><strong>6 checks passed</strong><span>Titles, description, tags, hashtags, chapters, and policy.</span></div><button id="detailsBtn">View details</button></div>
               </div>
               <div class="tab-content" id="titles"><div class="title-options" id="titleOptions"></div></div>
-              <div class="tab-content" id="chapters"><div class="chapter-list" id="chapterList"></div></div>
+              <div class="tab-content" id="description">
+                <div class="description-editor">
+                  <div class="section-title"><span>Ready-to-paste description</span><button class="copy-btn" data-copy-target="fullDescription">Copy all</button></div>
+                  <textarea id="fullDescription" aria-label="Generated video description"></textarea>
+                  <div class="description-meta"><span id="descriptionCount">0 / 5,000 bytes</span><span>Editable before export</span></div>
+                </div>
+                <div class="tag-block"><div class="section-title"><span>Focused tags</span></div><div class="tag-list" id="tagList"></div></div>
+              </div>
+              <div class="tab-content" id="chapters"><div class="chapter-confidence"><i>✓</i><span id="timingConfidence">Script markers · review timing</span></div><div class="chapter-list" id="chapterList"></div></div>
               <div class="tab-content" id="concepts"><div class="concept-grid" id="conceptGrid"></div></div>
               <div class="review-footer"><div><i>✓</i><span><strong>Review required</strong> before export or publishing</span></div><button id="exportBtn">Export kit <span>↗</span></button></div>
             </div>
@@ -151,7 +159,7 @@
       </section>
     </main>
   </div>
-  <div class="toast" id="toast"><i>✓</i><span>Copied to clipboard</span></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"><i>✓</i><span>Copied to clipboard</span></div>
   <div class="modal-backdrop hidden" id="modalBackdrop"><div class="modal"><button class="modal-close" id="modalClose">×</button><span class="eyebrow"><i></i> Validation report</span><h2>Everything checks out.</h2><p>Your package passed deterministic checks for YouTube's publishing constraints.</p><ul><li><i>✓</i> Titles stay under 70 characters</li><li><i>✓</i> Description is within the 5,000-byte limit</li><li><i>✓</i> Chapters begin at 00:00 with valid spacing</li><li><i>✓</i> Tags are focused and within budget</li><li><i>✓</i> Thumbnail concepts align with the script</li><li><i>✓</i> Human review gate is active</li></ul><button class="generate-btn modal-done" id="modalDone">Looks good</button></div></div>
   <script src="app.js"></script>
 </body>
