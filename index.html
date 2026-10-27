@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Frameforge turns raw video scripts into reviewed, ready-to-publish creator assets." />
+  <title>Frameforge — Creator Asset Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"><span></span><span></span></div>
+        <span>frameforge</span>
+      </div>
+      <nav class="main-nav" aria-label="Main navigation">
+        <p class="nav-label">Workspace</p>
+        <button class="nav-item active" data-page="studio"><i data-icon="spark"></i><span>Asset studio</span></button>
+        <button class="nav-item" data-page="projects"><i data-icon="grid"></i><span>Projects</span><em>12</em></button>
+        <button class="nav-item" data-page="analytics"><i data-icon="chart"></i><span>Analytics</span></button>
+        <p class="nav-label">Tools</p>
+        <button class="nav-item" data-page="brand"><i data-icon="palette"></i><span>Brand voice</span></button>
+        <button class="nav-item" data-page="integrations"><i data-icon="link"></i><span>Integrations</span></button>
+      </nav>
+      <div class="usage-card">
+        <div class="usage-head"><span>Monthly usage</span><strong>72%</strong></div>
+        <div class="usage-track"><span></span></div>
+        <p>18 of 25 generations used</p>
+        <button id="upgradeBtn">Upgrade plan <span>↗</span></button>
+      </div>
+      <div class="user-card">
+        <div class="avatar">MK</div>
+        <div><strong>Kamal Studio</strong><span>Creator plan</span></div>
+        <button aria-label="Account menu">•••</button>
+      </div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu" aria-label="Open menu">☰</button>
+        <div class="crumbs"><span>Workspace</span><b>/</b><strong>Untitled project</strong></div>
+        <div class="top-actions">
+          <span class="saved"><i></i> Saved</span>
+          <button class="icon-btn" aria-label="Notifications" id="notificationBtn"><i data-icon="bell"></i><small></small></button>
+          <button class="ghost-btn" id="shareBtn"><i data-icon="share"></i>Share</button>
+          <button class="primary-small" id="newProjectBtn">+ New project</button>
+        </div>
+      </header>
+
+      <section class="workspace">
+        <div class="page-heading">
+          <div>
+            <span class="eyebrow"><i></i> AI creator workspace</span>
+            <h1>Turn a script into a<br><em>publishing system.</em></h1>
+            <p>Create accurate titles, descriptions, chapters, and thumbnail directions—all aligned, validated, and ready to review.</p>
+          </div>
+          <div class="trust-card">
+            <div class="trust-icon">✓</div>
+            <div><strong>Human review built in</strong><span>Nothing publishes without your approval.</span></div>
+          </div>
+        </div>
+
+        <div class="studio-grid">
+          <section class="input-panel panel">
+            <div class="panel-header">
+              <div><span class="step">01</span><div><h2>Source material</h2><p>Give us the context behind your video.</p></div></div>
+              <button class="text-btn" id="loadExample">Load example</button>
+            </div>
+
+            <label class="field script-field">
+              <span>Video script <b>Required</b><small id="wordCount">0 words</small></span>
+              <textarea id="scriptInput" placeholder="Paste your video script here…\n\nUse headings to mark sections, or add timestamps like # 01:20 The key idea."></textarea>
+              <div class="textarea-footer"><span><kbd>⌘</kbd> + <kbd>V</kbd> to paste</span><span id="charCount">0 / 30,000</span></div>
+            </label>
+
+            <div class="form-row">
+              <label class="field"><span>Target audience <b>Recommended</b></span><input id="audienceInput" type="text" placeholder="e.g. Solo creators and small teams" /></label>
+              <label class="field"><span>Primary keyword</span><input id="keywordInput" type="text" placeholder="e.g. content workflow" /></label>
+            </div>
+            <div class="form-row three">
+              <label class="field"><span>Tone</span><select id="toneSelect"><option>Clear & confident</option><option>Warm & conversational</option><option>Bold & energetic</option><option>Technical & precise</option></select></label>
+              <label class="field"><span>Video length</span><div class="input-suffix"><input id="durationInput" type="number" min="1" placeholder="8" /><span>min</span></div></label>
+              <label class="field"><span>Language</span><select><option>English (US)</option><option>English (UK)</option><option>Hindi</option><option>Odia</option></select></label>
+            </div>
+
+            <div class="upload-row">
+              <div><strong>Accurate chapter timing</strong><span>Upload final captions for high-confidence timestamps.</span></div>
+              <label class="upload-button" for="srtUpload"><i data-icon="upload"></i><span id="uploadLabel">Add SRT / VTT</span><input id="srtUpload" type="file" accept=".srt,.vtt" /></label>
+            </div>
+
+            <div class="generation-bar">
+              <div class="provider"><span class="gemini-mark">✦</span><div><small>Generate with</small><strong>Smart model <i>⌄</i></strong></div></div>
+              <button class="generate-btn" id="generateBtn"><span>Forge my assets</span><i>→</i></button>
+            </div>
+          </section>
+
+          <aside class="preview-panel panel" id="previewPanel">
+            <div class="panel-header compact">
+              <div><span class="step dark">02</span><div><h2>Publishing kit</h2><p id="resultSubtitle">Your generated assets will appear here.</p></div></div>
+              <span class="status-pill" id="statusPill"><i></i>Draft</span>
+            </div>
+
+            <div class="empty-state" id="emptyState">
+              <div class="orbit-visual" aria-hidden="true">
+                <div class="orbit orbit-a"><span></span></div>
+                <div class="orbit orbit-b"><span></span></div>
+                <div class="core"><i data-icon="spark"></i></div>
+                <span class="float-tag tag-a">#</span><span class="float-tag tag-b">T</span><span class="float-tag tag-c">▶</span>
+              </div>
+              <h3>Your publishing kit starts here</h3>
+              <p>Add your script and context. Frameforge will turn it into a cohesive, platform-ready package.</p>
+              <div class="output-list">
+                <span><i>✓</i> 3 title directions</span><span><i>✓</i> Optimized description</span><span><i>✓</i> Validated chapters</span><span><i>✓</i> Thumbnail concepts</span>
+              </div>
+            </div>
+
+            <div class="loading-state hidden" id="loadingState">
+              <div class="loader-rings"><i></i><i></i><span>✦</span></div>
+              <h3>Forging your publishing kit</h3>
+              <p id="loadingText">Reading your script…</p>
+              <div class="progress"><span id="progressBar"></span></div>
+            </div>
+
+            <div class="results hidden" id="results">
+              <div class="result-tabs" role="tablist">
+                <button class="active" data-tab="overview">Overview</button><button data-tab="titles">Titles</button><button data-tab="chapters">Chapters</button><button data-tab="concepts">Concepts</button>
+              </div>
+              <div class="tab-content active" id="overview">
+                <div class="score-card"><div class="score-ring"><strong>94</strong><span>/100</span></div><div><span>Package score</span><h3>Ready for review</h3><p>All deterministic platform checks passed.</p></div><em>Excellent</em></div>
+                <div class="result-section"><div class="section-title"><span>Selected title</span><button class="copy-btn" data-copy-target="selectedTitle">Copy</button></div><h3 id="selectedTitle">Build a Content System That Actually Saves Time</h3><div class="meta-line"><span>Search-led</span><span id="titleLength">53 / 70 characters</span></div></div>
+                <div class="result-section"><div class="section-title"><span>Description hook</span><button class="copy-btn" data-copy-target="descriptionHook">Copy</button></div><p id="descriptionHook">Turn the mess behind every upload into a clear, repeatable creator workflow—from first draft to final publish.</p></div>
+                <div class="validation"><i>✓</i><div><strong>6 checks passed</strong><span>Titles, description, tags, hashtags, chapters, and policy.</span></div><button id="detailsBtn">View details</button></div>
+              </div>
+              <div class="tab-content" id="titles"><div class="title-options" id="titleOptions"></div></div>
+              <div class="tab-content" id="chapters"><div class="chapter-list" id="chapterList"></div></div>
+              <div class="tab-content" id="concepts"><div class="concept-grid" id="conceptGrid"></div></div>
+              <div class="review-footer"><div><i>✓</i><span><strong>Review required</strong> before export or publishing</span></div><button id="exportBtn">Export kit <span>↗</span></button></div>
+            </div>
+          </aside>
+        </div>
+
+        <div class="principles">
+          <div><span>01</span><strong>Truth before tricks</strong><p>Every claim stays grounded in your source.</p></div>
+          <div><span>02</span><strong>Timing you can trust</strong><p>Captions drive chapters—not AI guesswork.</p></div>
+          <div><span>03</span><strong>Ready, never reckless</strong><p>Platform rules checked before you review.</p></div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <div class="toast" id="toast"><i>✓</i><span>Copied to clipboard</span></div>
+  <div class="modal-backdrop hidden" id="modalBackdrop"><div class="modal"><button class="modal-close" id="modalClose">×</button><span class="eyebrow"><i></i> Validation report</span><h2>Everything checks out.</h2><p>Your package passed deterministic checks for YouTube's publishing constraints.</p><ul><li><i>✓</i> Titles stay under 70 characters</li><li><i>✓</i> Description is within the 5,000-byte limit</li><li><i>✓</i> Chapters begin at 00:00 with valid spacing</li><li><i>✓</i> Tags are focused and within budget</li><li><i>✓</i> Thumbnail concepts align with the script</li><li><i>✓</i> Human review gate is active</li></ul><button class="generate-btn modal-done" id="modalDone">Looks good</button></div></div>
+  <script src="app.js"></script>
+</body>
+</html>
